@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0708" />
+  <title>Kaiyur Khedun — IT Portfolio</title>
+  <meta name="description" content="Kaiyur Khedun — Software developer, duelist, driver. Final-year BCAD in Durban, South Africa." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;600;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- CUSTOM CURSOR — Dragonslayer-inspired -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2 L24 32 L20 36 L16 32 Z" fill="#e6e1d6" stroke="#0a0708" stroke-width="1"/>
+      <rect x="14" y="32" width="12" height="2" fill="#0a0708"/>
+      <rect x="18" y="34" width="4" height="4" fill="#7a5a1f"/>
+    </svg>
+  </div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <!-- Manga grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       SPLASH — Brand of Sacrifice ignition
+       ============================================================ -->
+  <section id="splash" class="splash" aria-label="Intro">
+    <div class="splash__inner">
+      <svg class="brand" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="bloodGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff2a2a" stop-opacity="1"/>
+            <stop offset="60%" stop-color="#8a0000" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="bloodBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2"/>
+          </filter>
+        </defs>
+        <circle class="brand__glow" cx="100" cy="100" r="90" fill="url(#bloodGlow)"/>
+        <g class="brand__ring" stroke="rgba(255,42,42,0.35)" stroke-width="1" fill="none">
+          <circle cx="100" cy="100" r="78"/>
+          <circle cx="100" cy="100" r="84" stroke-dasharray="2 6"/>
+        </g>
+        <g class="brand__mark" filter="url(#bloodBlur)" stroke="#ff1f1f" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path class="brand__stroke" d="M60 70 L100 30 L140 70 L120 70 L100 50 L80 70 Z"/>
+          <path class="brand__stroke" d="M60 130 L100 170 L140 130 L120 130 L100 150 L80 130 Z"/>
+          <path class="brand__stroke" d="M55 100 L145 100"/>
+          <circle class="brand__stroke" cx="100" cy="100" r="6" fill="#ff1f1f"/>
+        </g>
+      </svg>
+
+      <h1 class="splash__title">
+        <span class="splash__line">KAIYUR&nbsp;KHEDUN</span>
+        <span class="splash__sub">Developer · Duelist · Driver</span>
+      </h1>
+
+      <button class="splash__enter" id="enterBtn" type="button">
+        <span class="splash__enter-text">ENTER THE FORGE</span>
+        <span class="splash__enter-arrow">▾</span>
+      </button>
+    </div>
+
+    <div class="splash__wipe" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============================================================
+       NAV
+       ============================================================ -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="#top" class="nav__brand">⚔ KK</a>
+    <ul class="nav__links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#offduty">Off Duty</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="kicker" data-reveal>// final year BCAD · open to opportunities</p>
+        <h2 class="hero__title" data-reveal>
+          I will <span class="accent">win.</span><br/>
+          <span class="hero__sub">Built into every line I ship.</span>
+        </h2>
+        <p class="hero__lede" data-reveal>
+          Software developer in my final year of BCAD, with a BCom in Marketing
+          already in the bag. I build things that work — then make them faster,
+          sharper, and harder to break. Based in Durban, South Africa.
+        </p>
+        <div class="hero__cta" data-reveal>
+          <a href="#projects" class="btn btn--primary" data-magnetic>See the work</a>
+          <a href="#contact" class="btn btn--ghost" data-magnetic>Get in touch</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span>SCROLL</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- MANTRA MARQUEE -->
+    <div class="mantra" aria-hidden="true">
+      <div class="mantra__track">
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+        <span>I WILL WIN.</span><span aria-hidden="true">⚔</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+      <div class="section__header">
+        <span class="section__num">01</span>
+        <h2 class="section__title" data-reveal>About</h2>
+      </div>
+      <div class="about__grid">
+        <div class="about__copy">
+          <p data-reveal>
+            I'm <strong>Kaiyur Khedun</strong>, a software developer based in
+            <strong>Durban, South Africa</strong>. I'm in the final year of my
+            <strong>Bachelor in Computer &amp; Application Development</strong>
+            at Varsity College, sharpening the craft of shipping real software.
+          </p>
+          <p data-reveal>
+            Before code, I earned a <strong>Bachelor of Commerce in Marketing</strong>
+            (2024). The combo: a developer who understands the business behind the
+            build — who it's for, why it matters, and how to actually sell the thing.
+          </p>
+          <p data-reveal>
+            My approach is simple: <strong>I will win.</strong> Not loud, not cocky —
+            just the standard I hold every project to. If it ships from me, it works.
+          </p>
+          <p data-reveal class="about__quote">
+            "In this world, is the destiny of mankind controlled by some
+            transcendental entity or law? At least it is true that man has no
+            control even over his own will." — <span>Berserk</span>
+          </p>
+        </div>
+        <div class="about__card" data-reveal>
+          <div class="about__card-row"><span>Location</span><strong>Durban, ZA</strong></div>
+          <div class="about__card-row"><span>Focus</span><strong>Software Development</strong></div>
+          <div class="about__card-row"><span>Stack</span><strong>JS · Python · React</strong></div>
+          <div class="about__card-row"><span>Status</span><strong>Open to work</strong></div>
+          <a href="#contact" class="about__card-cta" data-magnetic>Reach out →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section skills" id="skills">
+      <div class="section__header">
+        <span class="section__num">02</span>
+        <h2 class="section__title" data-reveal>Arsenal</h2>
+      </div>
+      <ul class="skills__grid">
+        <li class="skill" data-reveal><span class="skill__name">Linux</span><span class="skill__tag">Sysadmin</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Windows Server</span><span class="skill__tag">Sysadmin</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Networking</span><span class="skill__tag">Cisco / Mikrotik</span></li>
+        <li class="skill" data-reveal><span class="skill__name">AWS</span><span class="skill__tag">Cloud</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Azure</span><span class="skill__tag">Cloud</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Docker</span><span class="skill__tag">Containers</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Python</span><span class="skill__tag">Scripting</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Bash</span><span class="skill__tag">Scripting</span></li>
+        <li class="skill" data-reveal><span class="skill__name">PowerShell</span><span class="skill__tag">Scripting</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Terraform</span><span class="skill__tag">IaC</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Ansible</span><span class="skill__tag">Automation</span></li>
+        <li class="skill" data-reveal><span class="skill__name">Security</span><span class="skill__tag">Hardening</span></li>
+      </ul>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section projects" id="projects">
+      <div class="section__header">
+        <span class="section__num">03</span>
+        <h2 class="section__title" data-reveal>Forged Works</h2>
+      </div>
+
+      <p class="projects__note" data-reveal>
+        // First projects are currently being forged. Returning visitors will see them land here first.
+      </p>
+
+      <div class="projects__grid">
+        <article class="project project--pending" data-reveal>
+          <div class="project__cover" data-art="01">
+            <span class="project__pending">In the forge</span>
+          </div>
+          <div class="project__body">
+            <h3>Project 01</h3>
+            <p>Currently being shaped. Replace this card with the build, the stack, and the links.</p>
+            <ul class="project__tags"><li>TBA</li></ul>
+          </div>
+        </article>
+
+        <article class="project project--pending" data-reveal>
+          <div class="project__cover" data-art="02">
+            <span class="project__pending">In the forge</span>
+          </div>
+          <div class="project__body">
+            <h3>Project 02</h3>
+            <p>Currently being shaped. Returning visitors will see it land here first.</p>
+            <ul class="project__tags"><li>TBA</li></ul>
+          </div>
+        </article>
+
+        <article class="project project--pending" data-reveal>
+          <div class="project__cover" data-art="03">
+            <span class="project__pending">In the forge</span>
+          </div>
+          <div class="project__body">
+            <h3>Project 03</h3>
+            <p>Currently being shaped. The next swing always lands harder.</p>
+            <ul class="project__tags"><li>TBA</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section experience" id="experience">
+      <div class="section__header">
+        <span class="section__num">04</span>
+        <h2 class="section__title" data-reveal>Path of the Struggler</h2>
+      </div>
+      <ol class="timeline">
+        <li class="timeline__item" data-reveal>
+          <div class="timeline__date">2025 — Present</div>
+          <h3>Final Year, BCAD · Varsity College</h3>
+          <p>
+            Bachelor in Computer &amp; Application Development. Focused on
+            full-stack development, applied projects, and shipping things
+            end-to-end. Mission: graduate already-employable.
+          </p>
+        </li>
+        <li class="timeline__item" data-reveal>
+          <div class="timeline__date">2022 — 2024</div>
+          <h3>BCom Marketing · Varsity College</h3>
+          <p>
+            Graduated with a Bachelor of Commerce, majoring in Marketing.
+            Grounded in consumer behaviour, strategy, and storytelling —
+            now powering the "why" behind every product I build.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- OFF DUTY -->
+    <section class="section offduty" id="offduty">
+      <div class="section__header">
+        <span class="section__num">05</span>
+        <h2 class="section__title" data-reveal>Off Duty</h2>
+      </div>
+      <p class="offduty__lede" data-reveal>
+        When the IDE is closed, I'm still chasing wins — just on different terrain.
+      </p>
+      <div class="offduty__grid">
+        <div class="offduty__card" data-reveal>
+          <div class="offduty__icon" aria-hidden="true">▲</div>
+          <h3>Sport</h3>
+          <p>Athlete by habit. Endurance, training, competition — the discipline that crosses straight into how I build.</p>
+        </div>
+        <div class="offduty__card" data-reveal>
+          <div class="offduty__icon" aria-hidden="true">◆</div>
+          <h3>Cars</h3>
+          <p>If it has an engine, I'm interested. Mechanical obsession that doubles as my favourite analogy for clean code.</p>
+        </div>
+        <div class="offduty__card" data-reveal>
+          <div class="offduty__icon" aria-hidden="true">✦</div>
+          <h3>Yu-Gi-Oh</h3>
+          <p>Duelist mindset. Strategy, deck-building, reading the board — the same instincts I bring to architecting a system.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div class="section__header">
+        <span class="section__num">06</span>
+        <h2 class="section__title" data-reveal>Forge a Pact</h2>
+      </div>
+      <div class="contact__inner" data-reveal>
+        <p class="contact__lede">
+          Hiring, collaborating, or just curious — the gate is open.
+        </p>
+        <a class="contact__email" href="mailto:kaissworld@gmail.com" data-magnetic>kaissworld@gmail.com</a>
+        <ul class="contact__links">
+          <!-- Replace [your-handle] with your GitHub username when you create the repo -->
+          <li><a href="https://github.com/[your-handle]" target="_blank" rel="noopener" data-magnetic>GitHub ↗</a></li>
+          <!-- LinkedIn / Resume hidden for now. Uncomment + fill when ready.
+          <li><a href="https://www.linkedin.com/in/your-handle" target="_blank" rel="noopener" data-magnetic>LinkedIn ↗</a></li>
+          <li><a href="your-resume-link" target="_blank" rel="noopener" data-magnetic>Résumé ↗</a></li>
+          -->
+        </ul>
+
+        <button class="behelit" id="behelit" type="button" aria-label="A strange red bead">
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="behelitGrad" cx="40%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#ffb0a0"/>
+                <stop offset="55%" stop-color="#a83030"/>
+                <stop offset="100%" stop-color="#330000"/>
+              </radialGradient>
+            </defs>
+            <circle cx="30" cy="30" r="22" fill="url(#behelitGrad)"/>
+            <ellipse cx="22" cy="22" rx="8" ry="3" fill="#fff" opacity="0.35"/>
+            <circle cx="22" cy="32" r="2" fill="#1a0000"/>
+            <circle cx="38" cy="30" r="2" fill="#1a0000"/>
+            <path d="M22 40 Q30 44 38 40" stroke="#1a0000" stroke-width="1.5" fill="none"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Kaiyur Khedun. Built in the dark.</p>
+    </footer>
+  </main>
+
+  <!-- ECLIPSE OVERLAY (Behelit easter egg) -->
+  <div class="eclipse" id="eclipse" aria-hidden="true">
+    <div class="eclipse__sun"></div>
+    <div class="eclipse__quote">
+      <p>"Sacrifice."</p>
+    </div>
+  </div>
+
+  <!-- GSAP from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
