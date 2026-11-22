@@ -48,6 +48,12 @@ export function World() {
       lockScroll(true);
       scrollTo({ top: 0, behavior: "instant" });
     }
+    // Slow device: don't hold the veil for the world. Show the page over the painted sky and let the world
+    // fade in behind it when it's ready (without the descent).
+    const veilCap = window.setTimeout(() => {
+      finishLoading();
+      showText();
+    }, Math.max(0, 2500 - performance.now()));
 
     const measure = () => {
       const top = (id: string) => {
@@ -103,23 +109,27 @@ export function World() {
     themeObs.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 
     import("./scene")
-      .then(({ createWorld, D_HILL: dh, D_END: de }) => {
+      .then(async ({ createWorld, D_HILL: dh, D_END: de }) => {
         if (!alive) return;
         D_HILL = dh;
         D_END = de;
-        world = createWorld(canvasRef.current!, {
+        const w = await createWorld(canvasRef.current!, {
           mobile,
           reduced,
           yaw: () => journey.yaw,
           onReady: () => {
+            clearTimeout(veilCap);
             root.classList.add("gl-on");
             finishLoading();
           },
         });
-        if (!world) return failed();
+        if (!alive) return w?.dispose();
+        if (!w) return failed();
+        world = w;
         measure();
         drive();
-        if (intro) {
+        // The descent only plays if the veil is still up; after the slow-device cap the text is already showing.
+        if (intro && !root.classList.contains("intro-text")) {
           let seen = false;
           try {
             seen = sessionStorage.getItem("kk-intro") === "1";
@@ -139,6 +149,7 @@ export function World() {
 
     return () => {
       alive = false;
+      clearTimeout(veilCap);
       clearTimeout(settle);
       cancelAnimationFrame(queued);
       themeObs.disconnect();

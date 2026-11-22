@@ -27,11 +27,11 @@
   --paper: #fffdf9;
   --paper-ink: #1d2530;
   --paper-2: #3f4b58;
-  --paper-muted: #6f7b87;
+  --paper-muted: #5d6874;
   --paper-rule: #e3ddd2;
-  --paper-accent: #c2543c;
+  --paper-accent: #a8472b;
   --f-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --f-body: var(--font-zen), "Hiragino Maru Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+  --f-body: var(--font-body), "Hiragino Maru Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, "Noto Sans JP", system-ui, sans-serif;
   --out: cubic-bezier(.16, 1, .3, 1);
   --ease: cubic-bezier(.2, .8, .2, 1);
 }
@@ -71,6 +71,7 @@
     transition: background-color .8s var(--ease), color .8s var(--ease);
   }
   h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
   ::selection { background: var(--accent); color: var(--bg); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 }

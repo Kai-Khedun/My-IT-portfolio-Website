@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Zen_Maru_Gothic } from "next/font/google";
+import { Fraunces, Nunito } from "next/font/google";
 import { ArrowDefs } from "@/components/Diagram";
 import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -8,7 +8,9 @@ import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], style: ["normal", "italic"] });
-const zen = Zen_Maru_Gothic({ variable: "--font-zen", subsets: ["latin"], weight: ["400", "500", "700"] });
+// Body: soft rounded Latin. The few Japanese labels use the system's Japanese font (a Japanese webfont here
+// meant ~4 MB of preloaded font files).
+const nunito = Nunito({ variable: "--font-body", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,7 +41,7 @@ setTimeout(function(){d.classList.remove("js-loading");d.classList.add("intro-te
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${zen.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${fraunces.variable} ${nunito.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: BOOT }} />
       </head>

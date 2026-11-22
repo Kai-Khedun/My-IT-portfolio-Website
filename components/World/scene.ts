@@ -58,7 +58,7 @@ export type World = {
   target: Drive;
   playIntro: (ms: number, onText: () => void) => void;
   resize: () => void;
-  /** Reduced motion renders on demand: call after changing `target`. */
+  /** Without continuous animation (reduced motion, no GPU) the world renders on demand: call after changing `target`. */
   redraw: () => void;
   dispose: () => void;
 };
@@ -199,15 +199,30 @@ function dotTexture(soft: boolean) {
   return new CanvasTexture(c);
 }
 
-export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; reduced: boolean; onReady: () => void; yaw: () => number }): World | null {
+// Yield to the browser between build steps so building the world never blocks input for long.
+const breathe = () => new Promise<void>((r) => setTimeout(r, 0));
+
+export async function createWorld(
+  canvas: HTMLCanvasElement,
+  opts: { mobile: boolean; reduced: boolean; onReady: () => void; yaw: () => number },
+): Promise<World | null> {
   let renderer: WebGLRenderer;
   try {
     renderer = new WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
   } catch {
     return null;
   }
+  // Checking every shader for errors makes the browser wait for each compile to finish; skip it in production
+  // so compiles run in parallel and the first frame doesn't stall the page.
+  renderer.debug.checkShaderErrors = process.env.NODE_ENV !== "production";
   const { mobile, reduced } = opts;
   let dpr = Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75);
+  // With no GPU (software WebGL), animating every frame would jank the page and drain the battery, so the
+  // world only redraws when something changes (scroll, theme) and rests in between. Same for reduced motion.
+  const ctx = renderer.getContext();
+  const dbg = ctx.getExtension("WEBGL_debug_renderer_info");
+  const gpu = String(ctx.getParameter(dbg ? dbg.UNMASKED_RENDERER_WEBGL : ctx.RENDERER));
+  const live = !reduced && !/swiftshader|llvmpipe|softpipe|software|basic render/i.test(gpu);
   renderer.setPixelRatio(dpr);
 
   const scene = new Scene();
@@ -245,6 +260,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   const tcol: number[] = [];
   const grassA = C("#9cc785"), grassB = C("#7fb378"), grassC = C("#b9d595"), wheat = C("#dccf8e"), sand = C("#ecdcb8"), deep = C("#6d9fae"), tmp = new Color();
   for (let i = 0; i < tp.count; i++) {
+    if (i % 800 === 799) await breathe(); // ~10ms slices: the terrain maths is the heaviest part of the build
     const x = tp.getX(i), z = tp.getZ(i);
     const h = terrainH(x, z);
     tp.setY(i, h);
@@ -286,6 +302,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   }
   scene.add(mtn);
 
+  await breathe();
   // ---------------- road
   const ROAD_Z0 = 100, ROAD_Z1 = -336, RW = 2.7;
   const rpos: number[] = [], rcol: number[] = [], ridx: number[] = [];
@@ -314,6 +331,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   rg.computeVertexNormals();
   scene.add(new Mesh(rg, new MeshToonMaterial({ vertexColors: true, gradientMap: ramp })));
 
+  await breathe();
   // ---------------- trees
   const treeN = mobile ? 260 : 460;
   const trunk = new InstancedMesh(new CylinderGeometry(0.16, 0.24, 1, 6), toon("#7a5b46"), treeN);
@@ -321,6 +339,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   const treeGreens = ["#5f9b68", "#6fab6c", "#4f8b61", "#82b977", "#5a9472"].map(C);
   let placed = 0;
   for (let tries = 0; placed < treeN && tries < treeN * 30; tries++) {
+    if (tries % 1500 === 1499) await breathe();
     const x = range(-XH + 10, XH - 10), z = range(Z0 - 10, -360);
     const dx = Math.abs(x - roadX(z));
     if (dx < 11) continue;
@@ -345,11 +364,13 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   trunk.count = crown.count = placed;
   scene.add(trunk, crown);
 
+  await breathe();
   // ---------------- flowers (meadow dots)
   const flN = mobile ? 1600 : 3200;
   const fpos: number[] = [], fcol: number[] = [];
   const flowerCols = ["#ffffff", "#fff4b0", "#ffd36e", "#f7b9cc", "#d9c8f5"].map(C);
   for (let i = 0; i < flN; i++) {
+    if (i % 800 === 799) await breathe();
     const z = range(80, -330);
     const x = roadX(z) + (rand() < 0.5 ? -1 : 1) * range(4.2, 40);
     const h = terrainH(x, z);
@@ -402,6 +423,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   const wireMat = new LineBasicMaterial({ color: DAY.wire.clone(), transparent: true, opacity: 0.75 });
   scene.add(new LineSegments(wg, wireMat));
 
+  await breathe();
   // ---------------- houses (warm windows at night)
   const windowMat = new MeshBasicMaterial({ color: "#ffd98a", transparent: true, opacity: 0 });
   const houseSpots: [number, number, string][] = [
@@ -462,6 +484,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   lh.position.set(LX, lhY - 0.3, LZ);
   scene.add(lh);
 
+  await breathe();
   // ---------------- clouds: big flat-bottomed cumulus
   const puffs: Matrix4[] = [];
   const addCloud = (cx: number, cy: number, cz: number, size: number) => {
@@ -508,6 +531,7 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
   flies.frustumCulled = false;
   scene.add(flies);
 
+  await breathe();
   // ---------------- the car: a small rounded hatchback with a suitcase on the roof
   const car = new Group();
   const outlineMat = new MeshBasicMaterial({ color: "#2b3442", side: BackSide });
@@ -678,8 +702,14 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
     camera.fov = camera.aspect < 0.8 ? 58 : 42;
     camera.updateProjectionMatrix();
     flyU.uScale.value = 60 * dpr * (h / 900);
-    if (reduced) frame(performance.now());
+    wake();
   }
+  function wake() {
+    if (!raf && alive) raf = requestAnimationFrame(frame);
+  }
+  const settled = () =>
+    Math.abs(target.d - cur.d) < 0.01 && Math.abs(target.hill - cur.hill) < 0.002 && Math.abs(target.sea - cur.sea) < 0.002 &&
+    Math.abs(target.yaw - cur.yaw) < 0.001 && Math.abs(target.night - cur.night) < 0.002;
 
   function frame(now: number) {
     raf = 0;
@@ -734,10 +764,10 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
     sky.position.copy(camPos);
 
     // Ambient life
-    clouds.position.x = reduced ? 0 : Math.sin(t * 0.02) * 14;
+    clouds.position.x = live ? Math.sin(t * 0.02) * 14 : 0;
     skyU.uTime.value = t;
     flyU.uTime.value = t;
-    beamPivot.rotation.y = reduced ? 1.2 : t * 0.6;
+    beamPivot.rotation.y = live ? t * 0.6 : 1.2;
 
     renderer.render(scene, camera);
     if (!shown) {
@@ -746,41 +776,40 @@ export function createWorld(canvas: HTMLCanvasElement, opts: { mobile: boolean; 
     }
 
     // Adaptive quality: if frames run long, render fewer pixels.
-    if (!reduced && dt > 0.028) slow++;
-    if (++frames % 90 === 0) {
+    if (live && dt > 0.028) slow++;
+    if (live && ++frames % 90 === 0) {
       if (slow > 45 && dpr > 0.8) {
         dpr = Math.max(0.8, dpr * 0.8);
         resize();
       }
       slow = 0;
     }
-    if (!reduced) raf = requestAnimationFrame(frame);
+    if (live || !settled()) raf = requestAnimationFrame(frame);
   }
 
   resize();
   applyNight(0);
+  // Compile shaders off the main thread where the browser allows it, before the first frame.
+  await renderer.compileAsync(scene, camera);
 
   const onVisible = () => {
-    if (!document.hidden && !raf && !reduced && alive) raf = requestAnimationFrame(frame);
+    if (!document.hidden && live) wake();
   };
   document.addEventListener("visibilitychange", onVisible);
 
-  if (reduced) frame(performance.now());
-  else raf = requestAnimationFrame(frame);
+  wake();
 
   return {
     target,
     playIntro(ms, onText) {
-      if (reduced) return onText();
+      if (!live) return onText();
       introStart = performance.now();
       introDur = ms;
       introP = 0;
       onIntroText = onText;
     },
     resize,
-    redraw() {
-      if (reduced && alive) frame(performance.now());
-    },
+    redraw: wake,
     dispose() {
       alive = false;
       cancelAnimationFrame(raf);

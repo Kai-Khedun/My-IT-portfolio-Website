@@ -15,6 +15,9 @@ const eslintConfig = defineConfig([
     // Old static site and the single-file prototype: reference only.
     "legacy/**",
     "reference/**",
+    // Playwright output.
+    "test-results/**",
+    "playwright-report/**",
   ]),
 ]);
 
