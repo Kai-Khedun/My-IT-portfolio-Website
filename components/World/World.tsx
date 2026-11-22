@@ -21,6 +21,10 @@ function along(y: number, pts: [number, number][]) {
   return pts[pts.length - 1][1];
 }
 
+// Start fetching the 3D scene as soon as this module loads in the browser, instead of waiting for React to
+// finish hydrating, so the world is usually ready before the veil gives up and the intro can play.
+const scene = typeof window === "undefined" ? null : import("./scene");
+
 export function World() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -48,12 +52,12 @@ export function World() {
       lockScroll(true);
       scrollTo({ top: 0, behavior: "instant" });
     }
-    // Slow device: don't hold the veil for the world. Show the page over the painted sky and let the world
-    // fade in behind it when it's ready (without the descent).
+    // Slow device or connection: don't hold the veil forever. After ~4s show the page over the painted sky and
+    // let the world fade in behind it when it's ready (without the descent).
     const veilCap = window.setTimeout(() => {
       finishLoading();
       showText();
-    }, Math.max(0, 2500 - performance.now()));
+    }, Math.max(0, 4000 - performance.now()));
 
     const measure = () => {
       const top = (id: string) => {
@@ -108,7 +112,7 @@ export function World() {
     const themeObs = new MutationObserver(drive);
     themeObs.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 
-    import("./scene")
+    (scene ?? import("./scene"))
       .then(async ({ createWorld, D_HILL: dh, D_END: de }) => {
         if (!alive) return;
         D_HILL = dh;
