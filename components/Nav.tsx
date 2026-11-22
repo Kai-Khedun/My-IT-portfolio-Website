@@ -1,10 +1,14 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Nav() {
   return (
-    <header className="nav solid">
-      <div className="wrap nav-in">
+    <header className="nav">
+      <div className="nav-in">
         <Link className="brand" href="/">
+          <span className="brand-spark" aria-hidden="true">
+            ✦
+          </span>
           Kaiyur Khedun
         </Link>
         <nav className="nav-links" aria-label="Main">
@@ -17,6 +21,7 @@ export function Nav() {
             Let&apos;s talk
           </Link>
         </nav>
+        <ThemeToggle />
       </div>
     </header>
   );

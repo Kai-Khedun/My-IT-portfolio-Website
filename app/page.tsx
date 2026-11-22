@@ -1,78 +1,99 @@
 import Link from "next/link";
-import { ArcCarousel } from "@/components/ArcCarousel/ArcCarousel";
-import { ProjectCard } from "@/components/ArcCarousel/ProjectCard";
-import { Intro } from "@/components/Intro/Intro";
+import { Clock } from "@/components/Clock";
 import { CopyButton } from "@/components/CopyButton";
-import { CvSheet } from "@/components/CvSheet";
-import { FitWidth } from "@/components/FitWidth";
-import { SheetHead } from "@/components/SheetHead";
-import { about, alsoBuilt, contact, cvTeaser } from "@/content/profile";
+import { ProjectCard } from "@/components/Ring/ProjectCard";
+import { ProjectRing } from "@/components/Ring/ProjectRing";
+import { World } from "@/components/World/World";
+import { about, alsoBuilt, contact, cvTeaser, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 
 export default function Home() {
   return (
     <>
-      <Intro />
+      <World />
+      <Hero />
       <About />
       <Work />
+      <AlsoBuilt />
       <CvTeaser />
       <Contact />
     </>
   );
 }
 
+/** Small section label: number, English, and a Japanese subtitle (decorative). */
+function Label({ n, en, jp }: { n: string; en: string; jp: string }) {
+  return (
+    <p className="label">
+      <span className="label-n">{n}</span>
+      <span>{en}</span>
+      <span className="label-jp" lang="ja" aria-hidden="true">
+        {jp}
+      </span>
+    </p>
+  );
+}
+
+function Hero() {
+  const [first, last] = profile.name.split(" ");
+  return (
+    <section className="hero" id="top" aria-labelledby="name">
+      <div className="wrap hero-in">
+        <p className="hero-kicker">
+          <span className="spark" aria-hidden="true">
+            ✦
+          </span>
+          <span lang="ja" aria-hidden="true">
+            ポートフォリオ
+          </span>
+          <span>Portfolio 2026</span>
+        </p>
+        <h1 className="hero-name" id="name" aria-label={profile.name}>
+          <span className="line" aria-hidden="true">
+            <span>{first}</span>
+          </span>
+          <span className="line" aria-hidden="true">
+            <span className="it">{last}</span>
+          </span>
+        </h1>
+        <p className="hero-tag">{profile.tagline}</p>
+      </div>
+      <div className="wrap hero-foot">
+        <span className="loc">
+          Durban · <Clock /> SAST
+        </span>
+        <span className="cue">
+          Scroll to drive <i aria-hidden="true" />
+        </span>
+        <Link href="/cv">Read my CV ↗</Link>
+      </div>
+    </section>
+  );
+}
+
 function About() {
   return (
-    <section className="sheet" id="about" aria-labelledby="about-title">
+    <section className="sec about" id="about" aria-labelledby="about-title">
       <div className="wrap">
-        <SheetHead left="02 · About" right="Sheet 02 of 05" />
-        <div className="about-grid">
-          <div>
-            <h2 className="sec-title mb-7" id="about-title">
-              About
-            </h2>
-            <p className="lead">{about.lead}</p>
-            <div className="prose">
-              {about.paragraphs.map((t) => (
-                <p key={t.slice(0, 24)}>{t}</p>
-              ))}
-            </div>
+        <div className="panel about-panel">
+          <Label n="01" en="About" jp="自己紹介" />
+          <h2 className="h2" id="about-title">
+            About
+          </h2>
+          <p className="lead">{about.lead}</p>
+          <div className="prose">
+            {about.paragraphs.map((t) => (
+              <p key={t}>{t}</p>
+            ))}
           </div>
-          <dl className="specs" aria-label="Skills">
+          <dl className="specs">
             {about.specs.map(([k, v]) => (
               <div key={k}>
-                <dt className="mono">{k}</dt>
+                <dt>{k}</dt>
                 <dd>{v}</dd>
               </div>
             ))}
           </dl>
-        </div>
-        <div className="bom-wrap">
-          <table className="bom">
-            <caption className="mono">Parts list · qualifications</caption>
-            <thead>
-              <tr>
-                <th className="mono" scope="col">
-                  Item
-                </th>
-                <th className="mono" scope="col">
-                  Qualification
-                </th>
-                <th className="mono" scope="col">
-                  Detail
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {about.qualifications.map((q) => (
-                <tr key={q.item}>
-                  <td>{q.item}</td>
-                  <td className="q">{q.name}</td>
-                  <td className="d">{q.detail}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
     </section>
@@ -81,23 +102,44 @@ function About() {
 
 function Work() {
   return (
-    <section className="sheet work" id="work" aria-labelledby="work-title">
-      <ArcCarousel
+    <section className="work" id="work" aria-labelledby="work-title">
+      <ProjectRing
+        head={
+          <>
+            <Label n="02" en="Work" jp="作品" />
+            <h2 className="h2" id="work-title">
+              Selected <em>work</em>
+            </h2>
+          </>
+        }
         titles={projects.map((p) => p.title)}
         cards={projects.map((p, i) => (
           <ProjectCard key={p.slug} p={p} i={i} />
         ))}
       />
+    </section>
+  );
+}
+
+function AlsoBuilt() {
+  return (
+    <section className="sec also" aria-labelledby="also-title">
       <div className="wrap">
-        <div className="index">
-          <h3 className="mono">Also built</h3>
-          <ul className="idx">
+        <div className="panel also-panel">
+          <h2 className="h3" id="also-title">
+            Also built
+          </h2>
+          <ul className="also-list">
             {alsoBuilt.map((r) => (
               <li key={r.name}>
-                <span className="n">{r.name}</span>
-                <span className="w">{r.what}</span>
-                <span className="mono s">{r.stack}</span>
-                <span className="mono st">{r.status}</span>
+                <div>
+                  <p className="also-name">{r.name}</p>
+                  <p className="also-what">{r.what}</p>
+                </div>
+                <p className="also-meta">
+                  <span>{r.stack}</span>
+                  <span className="tag">{r.status}</span>
+                </p>
               </li>
             ))}
           </ul>
@@ -109,38 +151,24 @@ function Work() {
 
 function CvTeaser() {
   return (
-    <section className="sheet" id="cv" aria-labelledby="cv-title">
+    <section className="sec cvt" id="cv" aria-labelledby="cv-title">
       <div className="wrap">
-        <SheetHead left="04 · Curriculum vitae" right="Sheet 04 of 05" />
-        <div className="cv-grid">
-          <div className="cv-copy">
-            <h2 className="sec-title" id="cv-title">
-              CV
-            </h2>
-            <p>{cvTeaser.line}</p>
-            <ul className="cv-list">
-              {cvTeaser.rows.map(([a, b]) => (
-                <li key={a}>
-                  <span>{a}</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="ctas">
-              <Link className="btn btn-solid" href="/cv">
-                Open my CV{" "}
-                <span className="arr" aria-hidden="true">
-                  ↗
-                </span>
-              </Link>
-            </div>
-          </div>
-          {/* Same destination as the button above, so it's skipped by Tab. */}
-          <Link className="cv-preview" href="/cv" aria-hidden="true" tabIndex={-1}>
-            <FitWidth width={820}>
-              <CvSheet preview />
-            </FitWidth>
-            <span className="open">Open CV ↗</span>
+        <div className="panel cvt-panel">
+          <Label n="03" en="Curriculum vitae" jp="履歴書" />
+          <h2 className="h2" id="cv-title">
+            CV
+          </h2>
+          <p className="cvt-line">{cvTeaser.line}</p>
+          <ul className="cvt-list">
+            {cvTeaser.rows.map(([a, b]) => (
+              <li key={a}>
+                <span>{a}</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <Link className="btn" href="/cv">
+            Open my CV <span aria-hidden="true">↗</span>
           </Link>
         </div>
       </div>
@@ -150,47 +178,39 @@ function CvTeaser() {
 
 function Contact() {
   return (
-    <section className="sheet contact" id="contact" aria-labelledby="contact-title">
-      <div className="wrap">
-        <SheetHead left="05 · Contact" right="Sheet 05 of 05" />
+    <section className="sec contact" id="contact" aria-labelledby="contact-title">
+      <div className="wrap contact-in">
+        <Label n="04" en="Contact" jp="連絡" />
         <h2 className="big" id="contact-title">
-          Let&apos;s talk
+          Let&apos;s <em>talk</em>
         </h2>
-        <div className="contact-grid">
-          <div>
-            <p>{contact.copy}</p>
-            <div className="ctas mt-6">
-              <Link className="btn btn-solid" href="/cv">
-                Read my CV
-              </Link>
-              <a className="btn btn-ghost" href="#top">
-                Back to top{" "}
-                <span className="arr" aria-hidden="true">
-                  ↑
+        <p className="contact-copy">{contact.copy}</p>
+        <div className="ctas">
+          <Link className="btn" href="/cv">
+            Read my CV
+          </Link>
+          <a className="btn btn-plain" href="#top">
+            Back to top <span aria-hidden="true">↑</span>
+          </a>
+        </div>
+        <ul className="links">
+          {contact.email && (
+            <li className="email">
+              <span className="addr">{contact.email}</span>
+              <CopyButton text={contact.email} />
+            </li>
+          )}
+          {contact.links.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} target="_blank" rel="noopener noreferrer">
+                <span>{l.label}</span>
+                <span className="links-text">
+                  {l.text} <span aria-hidden="true">↗</span>
                 </span>
               </a>
-            </div>
-          </div>
-          <ul className="links">
-            {contact.email && (
-              <li className="email">
-                <span className="mono">Email</span>
-                <span className="addr">{contact.email}</span>
-                <CopyButton text={contact.email} />
-              </li>
-            )}
-            {contact.links.map((l) => (
-              <li key={l.href}>
-                <a href={l.href} target="_blank" rel="noopener noreferrer">
-                  {l.label}{" "}
-                  <span className="mono">
-                    {l.text} <span aria-hidden="true">↗</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

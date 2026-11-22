@@ -144,5 +144,3 @@ export const projects: Project[] = [
   },
 ];
 
-export const dwg = (i: number) => `DWG 03.${i + 1}`;
-export const cardMeta = (p: Project) => `${p.role.split(" · ")[0]} · ${p.when.slice(-4)}`;
