@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Doto, Instrument_Sans, Martian_Mono } from "next/font/google";
 import { ArrowDefs } from "@/components/Diagram";
 import { Nav } from "@/components/Nav";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { profile } from "@/content/profile";
 import "./globals.css";
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a className="skip" href="#main">
           Skip to content
         </a>
+        <SmoothScroll />
         <ArrowDefs />
         <div className="bg-fallback" aria-hidden="true" />
         <Nav />

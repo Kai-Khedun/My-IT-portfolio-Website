@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArcCarousel } from "@/components/ArcCarousel/ArcCarousel";
 import { ProjectCard } from "@/components/ArcCarousel/ProjectCard";
 import { Clock } from "@/components/Clock";
 import { CoilMark } from "@/components/CoilMark";
@@ -111,19 +112,14 @@ function About() {
 
 function Work() {
   return (
-    <section className="sheet" id="work" aria-labelledby="work-title">
+    <section className="sheet work" id="work" aria-labelledby="work-title">
+      <ArcCarousel
+        titles={projects.map((p) => p.title)}
+        cards={projects.map((p, i) => (
+          <ProjectCard key={p.slug} p={p} i={i} />
+        ))}
+      />
       <div className="wrap">
-        <SheetHead left="03 · Selected work" right="Sheet 03 of 05" />
-        <h2 className="sec-title work-title" id="work-title">
-          Selected work
-        </h2>
-        <ul className="work-grid" aria-label="Selected work">
-          {projects.map((p, i) => (
-            <li key={p.slug}>
-              <ProjectCard p={p} i={i} />
-            </li>
-          ))}
-        </ul>
         <div className="index">
           <h3 className="mono">Also built</h3>
           <ul className="idx">
