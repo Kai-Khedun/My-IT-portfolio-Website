@@ -14,3 +14,11 @@ npm-debug.log*
 
 # Vercel
 .vercel
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+.env*
+*.tsbuildinfo
+next-env.d.ts

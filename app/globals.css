@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* Design tokens (brief §4.2). Dark only, by choice. */
+:root {
+  color-scheme: dark;
+  --ink: #05070b;
+  --ink-2: #0a0e15;
+  --ink-3: #101722;
+  --rule: #18212e;
+  --rule-2: #26344a;
+  --fg: #e7ebf1;
+  --fg-2: #b6bfcc;
+  --muted: #7b8697;
+  --cold: #8fb6ec;
+  --hot: #ff9d3c;
+  --heat-1: #2a0b55;
+  --heat-2: #86166e;
+  --heat-3: #e0414a;
+  --heat-4: #ff8a1f;
+  --heat-5: #ffd66b;
+  --paper: #f6f7f8;
+  --paper-ink: #0d1117;
+  --paper-2: #3c4552;
+  --paper-muted: #6a7482;
+  --paper-rule: #d8dde4;
+  --paper-accent: #1d45c2;
+  --thermal: linear-gradient(90deg, var(--heat-1), var(--heat-2), var(--heat-3), var(--heat-4), var(--heat-5));
+  --f-display: var(--font-doto), "Martian Mono", ui-monospace, monospace;
+  --f-body: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
+  --f-mono: var(--font-martian), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --out: cubic-bezier(.16, 1, .3, 1);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-2: var(--rule-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-cold: var(--cold);
+  --color-hot: var(--hot);
+  --color-paper: var(--paper);
+  --color-paper-ink: var(--paper-ink);
+  --font-display: var(--f-display);
+  --font-sans: var(--f-body);
+  --font-mono: var(--f-mono);
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--ink);
+    color: var(--fg);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  ::selection { background: var(--hot); color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--hot); outline-offset: 3px; }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+}
