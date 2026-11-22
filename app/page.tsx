@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Clock } from "@/components/Clock";
 import { CopyButton } from "@/components/CopyButton";
+import { LineReveals } from "@/components/LineReveals";
 import { ProjectCard } from "@/components/Ring/ProjectCard";
 import { ProjectRing } from "@/components/Ring/ProjectRing";
 import { World } from "@/components/World/World";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <>
       <World />
+      <LineReveals />
       <Hero />
       <About />
       <Work />
@@ -80,10 +82,14 @@ function About() {
           <h2 className="h2" id="about-title">
             About
           </h2>
-          <p className="lead">{about.lead}</p>
+          <p className="lead" data-reveal>
+            {about.lead}
+          </p>
           <div className="prose">
             {about.paragraphs.map((t) => (
-              <p key={t}>{t}</p>
+              <p key={t} data-reveal>
+                {t}
+              </p>
             ))}
           </div>
           <dl className="specs">
@@ -107,7 +113,7 @@ function Work() {
         head={
           <>
             <Label n="02" en="Work" jp="作品" />
-            <h2 className="h2" id="work-title">
+            <h2 className="h2" id="work-title" data-reveal>
               Selected <em>work</em>
             </h2>
           </>

@@ -10,7 +10,7 @@ Each item is also marked `TODO(kai)` in code. Until it's filled in, the site sho
 6. ~~Optional photo for the intro~~: no longer needed. The new intro is the road-trip scene.
 7. **Screenshots for project covers**: `public/work/<slug>/cover.webp`. Until then, each project shows its own painted-sky illustration.
 8. *Optional:* the CV as a PDF (`public/cv/Kaiyur-Khedun-CV.pdf`). The Download button appears on `/cv` once the file exists.
-9. **Domain name**, and whether to reuse the existing Vercel project. Needed for `metadataBase`, the sitemap and social previews.
+9. **Domain name**, and whether to reuse the existing Vercel project. On Vercel the site's address (social previews, sitemap) comes from the production domain automatically; add a custom domain there, or set `NEXT_PUBLIC_SITE_URL` (`lib/site.ts`).
 10. Keep or delete `legacy/` (the old Berserk site) once the new one is live?
 11. **Tetherfall: what did you build?** The "What I built" list is left out until you fill it in.
 12. **CV contact line** (email / phone / links you want printed on the CV header).

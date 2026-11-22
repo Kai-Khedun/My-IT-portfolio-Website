@@ -4,15 +4,18 @@ import { ArrowDefs } from "@/components/Diagram";
 import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { profile } from "@/content/profile";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], style: ["normal", "italic"] });
 const zen = Zen_Maru_Gothic({ variable: "--font-zen", subsets: ["latin"], weight: ["400", "500", "700"] });
 
 export const metadata: Metadata = {
-  // TODO(kai): domain for metadataBase (needed for absolute social-preview URLs).
+  metadataBase: new URL(SITE_URL),
   title: { default: "Kaiyur Khedun · Backend Developer", template: "%s · Kaiyur Khedun" },
   description: profile.tagline,
+  openGraph: { type: "website", siteName: profile.name, title: "Kaiyur Khedun · Backend Developer", description: profile.tagline },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
