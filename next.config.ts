@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
+// Fully static site: classic static generation, no Cache Components / Partial Prefetching.
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
   turbopack: {
     rules: {
       "*.css": {
