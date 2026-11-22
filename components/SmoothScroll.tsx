@@ -14,6 +14,13 @@ export function SmoothScroll() {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
     setLenis(lenis);
+    // A #section in the URL on load: the browser jumped there before the carousel pin added its scroll
+    // length, so measure the pins and jump again.
+    const target = location.hash && document.getElementById(location.hash.slice(1));
+    if (target) {
+      ScrollTrigger.refresh();
+      lenis.scrollTo(target, { immediate: true, force: true });
+    }
     return () => {
       setLenis(null);
       gsap.ticker.remove(tick);

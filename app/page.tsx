@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { ArcCarousel } from "@/components/ArcCarousel/ArcCarousel";
 import { ProjectCard } from "@/components/ArcCarousel/ProjectCard";
-import { Clock } from "@/components/Clock";
-import { CoilMark } from "@/components/CoilMark";
+import { Intro } from "@/components/Intro/Intro";
 import { CopyButton } from "@/components/CopyButton";
 import { CvSheet } from "@/components/CvSheet";
 import { FitWidth } from "@/components/FitWidth";
 import { SheetHead } from "@/components/SheetHead";
-import { about, alsoBuilt, contact, cvTeaser, profile } from "@/content/profile";
+import { about, alsoBuilt, contact, cvTeaser } from "@/content/profile";
 import { projects } from "@/content/projects";
 
 export default function Home() {
@@ -19,36 +18,6 @@ export default function Home() {
       <CvTeaser />
       <Contact />
     </>
-  );
-}
-
-/* Sheet 01. Static frame for now; the WebGL intro arrives in Phase 3. */
-function Intro() {
-  return (
-    <section className="hero" id="top" aria-labelledby="name">
-      <div className="pin">
-        <CoilMark className="hero-mark" />
-        <div className="wrap pin-in">
-          <div className="h-left">
-            <h1 id="name">{profile.name}</h1>
-            <p className="mono h-sub">
-              <span>{"// Portfolio"}</span>
-              <span>2026</span>
-            </p>
-          </div>
-          <p className="h-right">{profile.tagline}</p>
-          <div className="h-foot mono">
-            <span className="loc">
-              Durban · <Clock /> SAST
-            </span>
-            <span className="cue">
-              Scroll <i aria-hidden="true" />
-            </span>
-            <Link href="/cv">Read my CV ↗</Link>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 

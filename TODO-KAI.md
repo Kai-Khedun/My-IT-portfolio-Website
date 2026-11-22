@@ -7,7 +7,7 @@ Each item is also marked `TODO(kai)` in code. Until it's filled in, the site sho
 3. **BCom institution and year; Google IT Support certificate year.** `content/profile.ts` → `qualifications`, `content/cv.ts` → `education`.
 4. **Exact name of the Computer Science degree.** The old site's meta description says "BCAD"; not used until you confirm.
 5. **DailyClicker vs DailyLicker:** which is the final name? The site says DailyClicker for now.
-6. *Optional:* a front-facing photo for the LED intro (replaces the coil).
+6. *Optional:* a front-facing photo for the LED intro (replaces the coil). Drop it in `public/` and set `PORTRAIT` in `components/Intro/scene.ts`.
 7. **Screenshots for card covers**: `public/work/<slug>/cover.webp`. Until then, covers show the project diagram (or a monogram).
 8. *Optional:* the CV as a PDF (`public/cv/Kaiyur-Khedun-CV.pdf`). The Download button appears on `/cv` once the file exists.
 9. **Domain name**, and whether to reuse the existing Vercel project. Needed for `metadataBase`, the sitemap and social previews.
