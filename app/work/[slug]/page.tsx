@@ -47,6 +47,12 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
               {p.status}
             </li>
           </ul>
+          {p.award && (
+            <p className="case-award">
+              <span aria-hidden="true">✦ </span>
+              {p.award}
+            </p>
+          )}
           {p.links.length > 0 && (
             <div className="ctas">
               {p.links.map((l, k) => (

@@ -35,6 +35,14 @@ npm run test:e2e
 
 Builds the site, serves it on port 3100 and runs the smoke test (`tests/smoke.spec.ts`) in your installed Microsoft Edge: home loads, the project ring reaches card 6, `/cv` renders, nothing scrolls sideways at 390px, and reduced motion shows plain content.
 
+## CV PDF
+
+`public/cv/Kaiyur-Khedun-CV.pdf` is printed from the `/cv` page. After editing `content/cv.ts`, start the site (`npm run dev`) and run:
+
+```powershell
+npm run cv:pdf
+```
+
 ## Edit content
 
 All copy lives in `content/`: `profile.ts` (intro, about, contact), `projects.ts` (the six work cards and case pages) and `cv.ts`.

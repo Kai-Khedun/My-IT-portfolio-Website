@@ -16,6 +16,7 @@ export type Project = {
   stack: string[];
   figures: Figure[];
   monogram?: string; // cover when there's no diagram
+  award?: string;
   links: { label: string; href: string }[];
 };
 
@@ -27,6 +28,7 @@ export const projects: Project[] = [
     title: "Capri Pizza Kitchen",
     line: "Ordering, bookings and a pro shop for a Durban restaurant",
     role: "Backend lead · team lead",
+    award: "Won all three awards: Best Design, Best Solution and Best Presentation",
     when: "Jun – Nov 2026",
     summary:
       "Capri is a family-run wood-fire pizza and burger spot in Malvern, Durban, with a pool club and a pro shop under one roof. We built one platform for all three: a website, an iOS and Android app, and a dashboard the owner runs himself. I built the entire backend.",

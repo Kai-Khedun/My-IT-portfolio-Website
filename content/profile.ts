@@ -13,26 +13,18 @@ export const profile = {
 export const about = {
   lead: "I'm Kai. I studied marketing, then computer science, and now I build the part of the product nobody sees.",
   paragraphs: [
-    "My first degree was a BCom in Marketing. It taught me to start with the customer: who's ordering, what they expect to happen when they press the button, and what brings them back. I then went back for a degree in Computer Science, which I finished in 2026, and I've completed Google's IT Support certificate too.",
+    "My first degree was a BCom in Marketing Management, which I finished with distinction in 2023. It taught me to start with the customer: who's ordering, what they expect to happen when they press the button, and what brings them back. I then went back for a degree in computer science and application development (BCAD), which I finished in 2026, and I've completed Google's IT Support certificate and a Control4 automation certificate too.",
     "Most of my work sits behind the screen. I design schemas, write APIs, set up auth and build the pipelines that test and ship every change. I like rules that live in the database, where nobody can skip them, and a main branch nobody can push to without a review.",
     "This year I led three team builds with the same crew of four, including a full ordering, booking and shop platform for a real restaurant in Durban. I also tutor other students and put together setup kits so they can start coding on day one.",
   ],
   specs: [
     ["Focus", "Backend architecture, APIs, CI/CD"],
-    ["Languages", "C#, JavaScript, Kotlin, SQL"],
+    ["Languages", "C#, Kotlin, JavaScript, TypeScript, SQL, Luau"],
     ["Frameworks", ".NET / ASP.NET Core, Node.js + Express, Next.js, React, Expo, Ktor"],
     ["Data", "PostgreSQL, Supabase, Firestore, MongoDB"],
     ["Shipping", "GitHub Actions, Vercel, Azure, Expo EAS"],
     ["Based", "Durban, South Africa (UTC+2)"],
   ] as const,
-  qualifications: [
-    // TODO(kai): exact name of the Computer Science degree (old site said "BCAD"; not used until confirmed).
-    { item: "01", name: "Computer Science", detail: "The IIE, South Africa · completed 2026" },
-    // TODO(kai): BCom institution + year.
-    { item: "02", name: "BCom in Marketing", detail: "First degree · completed" },
-    // TODO(kai): certificate year.
-    { item: "03", name: "IT Support Professional Certificate", detail: "Google · completed" },
-  ],
 };
 
 export const alsoBuilt = [
@@ -59,10 +51,10 @@ export const alsoBuilt = [
 export const cvTeaser = {
   line: "Education, projects and skills on one page, ready to read.",
   rows: [
-    ["Computer Science", "2026"],
-    ["BCom in Marketing", "First degree"],
-    ["Google IT Support certificate", "Google"],
-    ["Team lead on three builds", "2026"],
+    ["BCAD, application development", "2026"],
+    ["BCom, Marketing Management (distinction)", "2023"],
+    ["Google IT Support · Control4 Automation", "Certificates"],
+    ["Capri: Best Design, Solution and Presentation", "2026"],
   ] as const,
 };
 
